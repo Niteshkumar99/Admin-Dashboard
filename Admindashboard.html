@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+
+<style>
+:root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --text: #222;
+    --primary: #5b86e5;
+}
+
+body.dark {
+    --bg: #121212;
+    --card: #1f1f1f;
+    --text: #f5f5f5;
+    --primary: #36d1dc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+    min-height: 100vh;
+}
+
+aside {
+    grid-area: sidebar;
+    background: linear-gradient(180deg, var(--primary), #764ba2);
+    color: white;
+    padding: 20px;
+}
+
+aside h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside li {
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+header {
+    grid-area: header;
+    background: var(--card);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+header h2 {
+    color: var(--primary);
+}
+
+header button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+main {
+    grid-area: main;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    color: var(--primary);
+}
+
+.card p {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main";
+    }
+
+    aside {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside>
+        <h3>Admin Panel</h3>
+        <ul>
+            <li onclick="loadData()">Dashboard</li>
+            <li>Users</li>
+            <li>Reports</li>
+            <li>Settings</li>
+        </ul>
+    </aside>
+
+    <header>
+        <h2>Dashboard</h2>
+        <button onclick="toggleTheme()">Toggle Theme</button>
+    </header>
+
+    <main>
+        <div class="card">
+            <h3>Total Users</h3>
+            <p id="users">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Revenue</h3>
+            <p id="revenue">₹ 0</p>
+        </div>
+
+        <div class="card">
+            <h3>Active Sessions</h3>
+            <p id="sessions">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Server Status</h3>
+            <p id="status">Loading...</p>
+        </div>
+    </main>
+
+</div>
+
+<script>
+/* Load theme from localStorage */
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+}
+
+/* Toggle Theme */
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+    } else {
+        localStorage.setItem("theme", "light");
+    }
+}
+
+/* Dynamic Dashboard Data */
+function loadData() {
+    document.getElementById("users").innerText = 1250;
+    document.getElementById("revenue").innerText = "₹ 3,45,000";
+    document.getElementById("sessions").innerText = 87;
+    document.getElementById("status").innerText = "Running Smoothly";
+}
+
+/* Load data on page load */
+loadData();
+</script>
+
+</body>
+</html>
